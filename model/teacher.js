@@ -1,16 +1,11 @@
-// dB structure for student, teacher
-const mongodb = require("mongoose");
-// student table: name, email, contact, class, cwa, gardian
-
-// teacher table: name, email, contact, courses
-
-// class table: it's id will be a foreign id in student's table. A student can belong to 1 class at a time
+// teacher's schema.
+// Provides data structure for teachers in mongoose dB
 const mongodb = require("mongoose");
 
 const Schema = mongodb.Schema;
 
-const studentSchema = new Schema(
-  "student",
+const teacherSchema = new Schema(
+  "teacher",
   {
     name: {
       type: String,
@@ -33,6 +28,6 @@ const studentSchema = new Schema(
   { timestamp: true }
 );
 
-const Student = mongodb.model("Student", studentSchema);
+const Teacher = mongodb.model("Teacher", teacherSchema);
 
-module.exports = Student;
+module.exports = Teacher;
