@@ -2,8 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/", (request, response) => {
-  // do something
+router.get("/", (req, resp) => {
+  resp.json({ msg: "in level route" });
 });
-
 module.exports = router;

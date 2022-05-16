@@ -1,20 +1,34 @@
 const mongodb = require("mongoose");
 const express = require("express");
 const morgan = require("morgan");
+const studentRouter = require("./router/studentRouter");
+const teacherRouter = require("./router/teacherRouter");
+const levelRouter = require("./router/levelRouter");
+
 require("dotenv").config();
 
 const app = express();
+const PORT = process.env.PORT || 3001;
 
 app.use(morgan("combined"));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "5mb" }));
+// app.use(express.urlencoded({ limit: "50mb" }));
 
-const dbUrl = `mongodb+srv://${process.env.USERNAME}:${process.env.KEY}@cluster0.9fdwx.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const dbUrl = `mongodb+srv://${process.env.DB_NAME}:${process.env.KEY}@cluster0.9fdwx.mongodb.net/${process.env.USERNAME}?retryWrites=true&w=majority`;
+
+app.use("/student", studentRouter);
+app.use("/teacher", teacherRouter);
+app.use("/level", levelRouter);
+app.use(function (req, res, next) {
+  res.status(404).json({ status: 404, mgs: "Not found" });
+  return;
+});
 
 const db = mongodb
   .connect(dbUrl)
-  .then((result) => app.listen(3000))
+  .then((result) =>
+    app.listen(PORT, () => {
+      console.log(`http://localhost:${PORT}`);
+    })
+  )
   .catch((err) => console.log({ err }));
-
-app.get("/", (req, res) => {
-  res.send({ name: "hello there" });
-});

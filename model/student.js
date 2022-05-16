@@ -5,11 +5,14 @@ const mongodb = require("mongoose");
 const Schema = mongodb.Schema;
 
 const studentSchema = new Schema(
-  "student",
   {
     name: {
       type: String,
       required: true,
+    },
+    image: {
+      type: String,
+      default: "",
     },
     email: {
       type: String,
@@ -25,15 +28,19 @@ const studentSchema = new Schema(
     },
     gardian: {
       type: String,
-      required: true,
+      default: "",
     },
     cwa: {
       type: Number,
       default: 0.0,
     },
+    complete: {
+      type: Boolean,
+      default: false,
+    },
   },
 
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const Student = mongodb.model("Student", studentSchema);

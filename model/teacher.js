@@ -5,7 +5,6 @@ const mongodb = require("mongoose");
 const Schema = mongodb.Schema;
 
 const teacherSchema = new Schema(
-  "teacher",
   {
     name: {
       type: String,
@@ -14,6 +13,10 @@ const teacherSchema = new Schema(
     email: {
       type: String,
       required: true,
+    },
+    image: {
+      type: String,
+      default: "",
     },
     contact: {
       type: String,
@@ -25,7 +28,7 @@ const teacherSchema = new Schema(
     },
   },
 
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const Teacher = mongodb.model("Teacher", teacherSchema);
